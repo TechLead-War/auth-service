@@ -1,0 +1,3 @@
+The internal folder in Go projects is used to hold packages that are intended to be used only within the project itself and not by external projects. This is a way to enforce encapsulation and prevent other projects from importing and using these internal packages.
+<br><br>
+These internal packages can be imported and used within the project, but they cannot be imported by code outside of the project. This helps in maintaining a clean and well-organized codebase.

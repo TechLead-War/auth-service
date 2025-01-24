@@ -1,0 +1,10 @@
+1. Install
+go get github.com/joho/godotenv
+
+2. Create a .env file
+
+3. Load the envs
+err := godotenv.Load("internal/envs/.env")
+
+4. Read the env
+envs.GetEnv("ADDR", ":8800")
