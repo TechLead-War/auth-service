@@ -2,10 +2,21 @@
 
 package main
 
+import "auth-service-2.0/internal/repository"
+
 type app struct {
-	config config
+	AppAddr config
+	Store   repository.Storage
 }
 
 type config struct {
-	addr string
+	AppAddr  string
+	DBConfig dbConfig
+}
+
+type dbConfig struct {
+	DBAddr       string
+	MaxOpenConns int
+	MaxIdleConns int
+	MaxIdleTime  string
 }

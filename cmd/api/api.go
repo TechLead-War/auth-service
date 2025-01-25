@@ -32,13 +32,13 @@ func (app *app) mount() http.Handler {
 func (app *app) run(mux http.Handler) error {
 
 	srv := &http.Server{
-		Addr:         app.config.addr,
+		Addr:         app.AppAddr.AppAddr,
 		Handler:      mux,
 		WriteTimeout: time.Second * 30,
 		ReadTimeout:  time.Second * 10,
 		IdleTimeout:  time.Minute, // max time to wait for the next req, if keep-alive connection is enabled
 	}
 
-	log.Printf("Server started at %s", app.config.addr)
+	log.Printf("Server started at %s", app.AppAddr.AppAddr)
 	return srv.ListenAndServe()
 }
