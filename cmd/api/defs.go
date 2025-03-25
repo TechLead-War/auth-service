@@ -2,7 +2,11 @@
 
 package main
 
-import "auth-service-2.0/internal/repository"
+import (
+	"time"
+
+	"auth-service-2.0/internal/repository"
+)
 
 type app struct {
 	AppAddr config
@@ -12,6 +16,7 @@ type app struct {
 type config struct {
 	AppAddr  string
 	DBConfig dbConfig
+	Env      string
 }
 
 type dbConfig struct {
@@ -19,4 +24,19 @@ type dbConfig struct {
 	MaxOpenConns int
 	MaxIdleConns int
 	MaxIdleTime  string
+}
+
+type CreateLogPayload struct {
+	Log              string    `json:"log" validate:"required,max=10000"`
+	RequestId        string    `json:"request_id" validate:"required"`
+	RequestTimeStamp time.Time `json:"time_stamp"`
+	UserId           int64     `json:"user_id" validate:"required,gt=0"`
+}
+
+type ErrorEnvelope struct {
+	Error string `json:"error"`
+}
+
+type ResponseEnvelope struct {
+	Data any `json:"data"`
 }

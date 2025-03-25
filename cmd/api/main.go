@@ -5,25 +5,26 @@ import (
 	"log"
 
 	"auth-service-2.0/internal/db"
-	"auth-service-2.0/internal/envs"
 	"auth-service-2.0/internal/repository"
+	"auth-service-2.0/internal/resources"
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	err := godotenv.Load("internal/envs/.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 
 	cfg := config{
-		AppAddr: envs.GetEnv("ADDR", ":8800"),
+		AppAddr: resources.GetEnv("ADDR", ":8800"),
 		DBConfig: dbConfig{
-			DBAddr:       envs.GetEnv("DB_ADDR", "postgres://postgres_user:postgres_pass@localhost:5432/postgres_db?sslmode=disable"),
-			MaxOpenConns: envs.GetEnvAsInt("DB_MAX_OPEN_CONNS", 30),
-			MaxIdleConns: envs.GetEnvAsInt("DB_MAX_IDLE_CONNS", 30),
-			MaxIdleTime:  envs.GetEnv("DB_MAX_IDLE_TIME", "15m"),
+			DBAddr:       resources.GetEnv("DB_ADDR", "postgres://postgres_user:postgres_pass@localhost:5432/postgres_db?sslmode=disable"),
+			MaxOpenConns: resources.GetEnvAsInt("DB_MAX_OPEN_CONNS", 30),
+			MaxIdleConns: resources.GetEnvAsInt("DB_MAX_IDLE_CONNS", 30),
+			MaxIdleTime:  resources.GetEnv("DB_MAX_IDLE_TIME", "15m"),
 		},
+		Env: resources.GetEnv("ENV", "development"),
 	}
 
 	database, err := db.NewDBConnection(

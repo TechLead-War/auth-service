@@ -2,9 +2,11 @@ package repository
 
 import (
 	"context"
+
+	"auth-service-2.0/internal/resources"
 )
 
-func (us *UsersStore) Create(ctx context.Context, user *User) error {
+func (us *UserStore) Create(ctx context.Context, user *User) error {
 	query := `
 		INSERT INTO users 
 		    (username, password, created_at, email) 
@@ -14,7 +16,11 @@ func (us *UsersStore) Create(ctx context.Context, user *User) error {
 			id, created_at
 	`
 
-	err := us.db.QueryRowContext(
+	// Set a timeout for the query
+	ctx, cancel := context.WithTimeout(ctx, resources.QueryTimeOut)
+	defer cancel()
+
+	err := us.Db.QueryRowContext(
 		ctx, query,
 		user.Username,
 		user.Password,

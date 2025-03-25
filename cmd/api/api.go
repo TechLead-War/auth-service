@@ -24,6 +24,19 @@ func (app *app) mount() http.Handler {
 	// Make a group
 	router.Route("/v1", func(r chi.Router) {
 		r.Get("/ping", app.healthCheckHandler)
+
+		// This is inside v1 router, so all routes will be v1/<bla bla>
+		r.Route("/logs", func(r chi.Router) {
+			r.Post("/", app.createLogHandler)
+
+			r.Route("/{requestId}", func(r chi.Router) {
+				r.Get("/", app.getLogsHandler)
+			})
+		})
+
+		r.Route("/session", func(r chi.Router) {
+			r.Get("/{sessionId}", app.GetSessionById)
+		})
 	})
 
 	return router

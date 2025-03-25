@@ -1,0 +1,1 @@
+ALTER TABLE login_logs RENAME COLUMN id TO log_id;

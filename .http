@@ -1,0 +1,10 @@
+GET http://localhost:8800/v1/ping
+
+
+###
+
+# curl -X GET "http://localhost:8000/session/123" -H "Content-Type: application/json"
+GET http://localhost:8800/v1/session/123
+Content-Type: application/json
+
+###
